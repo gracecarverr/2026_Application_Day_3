@@ -63,6 +63,23 @@ renewables_summary <- WorldBank %>%
                                           use = "complete.obs"), 3)
   )
 
+# Create figure;
+
+WorldBank %>%
+  ggplot(aes(x = LogGdpPerCapita, y = AccessToElec)) +
+  geom_point(alpha = 0.6, color = "steelblue") +
+  geom_smooth(method = "lm", color = "red", se = TRUE) +
+  geom_hline(yintercept = 100, linetype = "dashed", color = "gray", size = 1) +
+  ylim(0, 105) +  # Set y-axis from 0 to 105
+  labs(
+    title = "Electricity Access vs GDP per Capita",
+    x = "Log GDP per Capita (US$)",
+    y = "Access to Electricity (% of population)"
+  ) +
+  theme_minimal()
+
+ggsave("output/figures/gdp_vs_electricity.png", width = 8, height = 5)
+
 # Write tables to CSV;
 
 write.csv(access_summary, "output/tables/access_to_electricity_summary.csv",
