@@ -38,7 +38,7 @@ The pipeline is fully reproducible: raw data are never edited by hand, all trans
 │   └── tables/                  # Summary statistics tables
 │       ├── access_to_electricity_summary.csv
 │       └── share_renewable_electricity_summary.csv
-├── LICENSE
+├── LICENSE.md
 └── README.md
 ```
 
