@@ -13,13 +13,13 @@
 #
 # ============================================================================
 
-# Set working directory;
-
-setwd("~/Desktop/economic-growth-environment-data")
+library(tidyverse)
+library(data.table)
+library(here)
 
 # Read raw data;
 
-WorldBank <- read.csv("data/raw/wdi_raw.csv")
+WorldBank <- read.csv(here("data", "raw", "wdi_raw.csv"))
 
 # Remove aggregate country codes, filter down to countries;
 
@@ -67,6 +67,6 @@ setnames(WorldBank,
 
 # Save processed data to CSV;
 
-write.csv(WorldBank, "data/processed/economic_environment_indicators.csv", 
+write.csv(WorldBank, here("data", "processed", "economic_environment_indicators.csv"),
           row.names = FALSE)
 

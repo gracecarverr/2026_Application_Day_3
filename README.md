@@ -26,17 +26,19 @@ The pipeline is fully reproducible: raw data are never edited by hand, all trans
 ├── code/
 │   ├── 01_fetch_data.R          # Pull raw data from World Bank API
 │   ├── 02_clean_data.R          # Tidy and clean the raw data
-│   └── 03_summary_statistics.R  # Generate summary statistics tables
+│   └── 03_summary_statistics.R  # Generate summary statistics tables and figure
 ├── data/
 │   ├── raw/                     # Raw data — never edited
 │   │   └── wdi_raw.csv
 │   └── processed/               # Cleaned, analysis-ready data
 │       └── economic_environment_indicators.csv
 ├── output/
-│   └── figures/                 # Summary statistic tables and plots
+│   ├── figures/                 # Plots
+│   │   └── gdp_vs_electricity.png
+│   └── tables/                  # Summary statistics tables
 │       ├── access_to_electricity_summary.csv
-│       ├── share_renewable_electricity_summary.csv
-│       └── gdp_vs_electricity.png
+│       └── share_renewable_electricity_summary.csv
+├── LICENSE
 └── README.md
 ```
 
@@ -64,11 +66,12 @@ The pipeline is fully reproducible: raw data are never edited by hand, all trans
 | `tidyverse` | Data manipulation and piping |
 | `data.table` | Fast data operations (`setnames`) |
 | `knitr` | Table formatting |
+| `here` | Portable, root-relative file paths |
 
 Install all packages with:
 
 ```r
-install.packages(c("WDI", "tidyverse", "data.table", "knitr"))
+install.packages(c("WDI", "tidyverse", "data.table", "knitr", "here"))
 ```
 
 ---
@@ -81,7 +84,7 @@ Run the scripts in order from the project root directory.
 |---|---|
 | [`code/01_fetch_data.R`](code/01_fetch_data.R) | Fetches raw country-level data from the World Bank API and saves to `data/raw/wdi_raw.csv` |
 | [`code/02_clean_data.R`](code/02_clean_data.R) | Removes regional aggregates, selects and renames columns, and saves a tidy dataset to `data/processed/` |
-| [`code/03_summary_statistics.R`](code/03_summary_statistics.R) | Computes per-indicator summary statistics (N, mean, median, min, max, SD, correlation with log GDP) and writes tables to `output/figures/` |
+| [`code/03_summary_statistics.R`](code/03_summary_statistics.R) | Computes per-indicator summary statistics (N, mean, median, min, max, SD, correlation with log GDP) and writes tables to `output/tables/`; produces scatter plot to `output/figures/` |
 
 ---
 
@@ -97,4 +100,4 @@ source("code/02_clean_data.R")
 source("code/03_summary_statistics.R")
 ```
 
-All paths are relative to the project root. Do not change the working directory manually — the scripts handle this internally.
+All paths are relative to the project root. Scripts use the `here` package to resolve paths — no manual working directory changes are needed.

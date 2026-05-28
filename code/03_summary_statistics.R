@@ -20,14 +20,11 @@
 library(tidyverse)
 library(data.table)
 library(knitr)
-
-# Set working directory;
-
-setwd("~/Desktop/economic-growth-environment-data")
+library(here)
 
 # Read cleaned data;
 
-WorldBank <- read.csv("data/processed/economic_environment_indicators.csv")
+WorldBank <- read.csv(here("data", "processed", "economic_environment_indicators.csv"))
 
 # Create log GDP for easier interpretation;
 
@@ -78,13 +75,13 @@ WorldBank %>%
   ) +
   theme_minimal()
 
-ggsave("output/figures/gdp_vs_electricity.png", width = 8, height = 5)
+ggsave(here("output", "figures", "gdp_vs_electricity.png"), width = 8, height = 5)
 
 # Write tables to CSV;
 
-write.csv(access_summary, "output/tables/access_to_electricity_summary.csv",
+write.csv(access_summary, here("output", "tables", "access_to_electricity_summary.csv"),
           row.names = FALSE)
-write.csv(renewables_summary, "output/tables/share_renewable_electricity_summary.csv", 
+write.csv(renewables_summary, here("output", "tables", "share_renewable_electricity_summary.csv"),
           row.names = FALSE)
 
 

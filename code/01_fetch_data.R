@@ -23,10 +23,7 @@
 
 library(WDI)
 library(tidyverse)
-
-# Set working directory;
-
-setwd("~/Desktop/economic-growth-environment-data")
+library(here)
 
 # Fetch data from World Bank API;
 
@@ -39,5 +36,5 @@ WorldBank <- WDI(indicator = c(
 
 # Save raw data to CSV
 
-write.csv(WorldBank, "data/raw/wdi_raw.csv", row.names = FALSE)
+write.csv(WorldBank, here("data", "raw", "wdi_raw.csv"), row.names = FALSE)
 
