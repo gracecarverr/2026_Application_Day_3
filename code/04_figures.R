@@ -103,12 +103,12 @@ fig1 <- data_latest %>%
     labels = label_dollar(scale = 1e-3, suffix = "k"),
     breaks = c(500, 1000, 2000, 5000, 10000, 30000, 100000)
   ) +
-  scale_y_continuous(limits = c(0, 101),
+  scale_y_continuous(limits = c(0, 100),
                      labels = label_percent(scale = 1)) +
-  scale_color_brewer(palette = "Dark2", name = NULL) +
+  scale_color_brewer(palette = "Dark2", name = "Region") +
   labs(
     title = "Electricity access vs. GDP per capita",
-    subtitle = "Cross-section of 196 countries, 2021",
+    subtitle = "196 countries by World Bank region, 2021",
     x = "GDP per capita (log scale, current USD)",
     y = "Access to electricity (% of population)",
     caption = source_note
@@ -129,10 +129,10 @@ fig2 <- data_latest_renewable %>%
   ) +
   scale_y_continuous(limits = c(0, 101),
                      labels = label_percent(scale = 1)) +
-  scale_color_brewer(palette = "Dark2", name = NULL) +
+  scale_color_brewer(palette = "Dark2", name = "Region") +
   labs(
     title = "Renewable electricity share vs. GDP per capita",
-    subtitle = "Cross-section of 194 countries, 2021",
+    subtitle = "194 countries by World Bank region, 2021",
     x = "GDP per capita (log scale, current USD)",
     y = "Share of renewable electricity (% of total output)",
     caption = source_note
@@ -281,8 +281,8 @@ fig7 <- data_latest_renewable %>%
 ggsave("output/figures/day4/fig7_renewable_top20.png", fig7,
        width = 7, height = 5.5, dpi = 180, bg = "white")
 
-# Figure 8: Electricity access trends by RegionCollapsed
-RegionCollapsedal_ts <- data %>%
+# Figure 8: Electricity access trends by region
+regional_ts <- data %>%
   filter(Year >= 2000, Year <= 2021, !is.na(AccessToElec)) %>%
   group_by(Year, RegionCollapsed) %>%
   summarise(AvgAccess = mean(AccessToElec, na.rm = TRUE),
@@ -296,7 +296,7 @@ RegionCollapsedal_ts <- data %>%
     )
   )
 
-fig8 <- ggplot(RegionCollapsedal_ts, aes(x = Year, y = AvgAccess,
+fig8 <- ggplot(regional_ts, aes(x = Year, y = AvgAccess,
                                 color = RegionCollapsed)) +
   geom_line(linewidth = 1.2) +
   facet_wrap(~RegionCollapsed, ncol = 2) +
@@ -311,10 +311,10 @@ fig8 <- ggplot(RegionCollapsedal_ts, aes(x = Year, y = AvgAccess,
     )
   ) +
   labs(
-    title = "Electricity access trends by RegionCollapsed",
-    subtitle = "2000–2021: Expansion pace varies significantly across RegionCollapseds",
+    title = "Electricity access trends by region",
+    subtitle = "2000–2021: Expansion pace varies significantly across regions",
     x = NULL,
-    y = "Average access (%)",
+    y = "Access to electricity (% of population)",
     caption = source_note
   ) +
   theme_pub() +
@@ -325,5 +325,5 @@ fig8 <- ggplot(RegionCollapsedal_ts, aes(x = Year, y = AvgAccess,
     strip.text = element_text(size = 10, margin = margin(t = 2, b = 2))
   )
 
-ggsave("output/figures/day4/fig8_access_RegionCollapsedal_facets.png", fig8,
+ggsave("output/figures/day4/fig8_access_regional_facets.png", fig8,
        width = 8, height = 6, dpi = 180, bg = "white")
